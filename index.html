@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blade Count Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a simple student project page. Big friendly title, spinning rotor at the top, then three sections stacked with photos next to the text. */
+:root {
+  --bg: #EAF3FB;
+  --card: #FFFFFF;
+  --ink: #1B2A3A;
+  --muted: #546577;
+  --line: #C9D9E8;
+  --blue: #2D6CDF;
+  --blue-soft: #DCE8FB;
+  --orange: #E8832A;
+  --good: #217A47;
+  --good-soft: #D9F0E2;
+  --no: #B3402F;
+  --no-soft: #F8DFDA;
+  --maybe: #946200;
+  --maybe-soft: #FBEBC8;
+  --font-head: "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Nunito", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1A26; --card: #17263A; --ink: #E7EEF6; --muted: #9DB0C4; --line: #2C4059;
+    --blue: #6EA0FF; --blue-soft: #1D3357; --orange: #F5A15A;
+    --good: #6FD39B; --good-soft: #163626; --no: #F0897F; --no-soft: #3C1D19; --maybe: #F0B65A; --maybe-soft: #3A2B0F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1A26; --card: #17263A; --ink: #E7EEF6; --muted: #9DB0C4; --line: #2C4059;
+  --blue: #6EA0FF; --blue-soft: #1D3357; --orange: #F5A15A;
+  --good: #6FD39B; --good-soft: #163626; --no: #F0897F; --no-soft: #3C1D19; --maybe: #F0B65A; --maybe-soft: #3A2B0F;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; padding-inline: 16px; }
+.wrap { max-width: 920px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2rem, 6vw, 3.2rem); color: var(--blue); }
+h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); color: var(--blue); }
+h3 { font-size: 1.15rem; }
+p { margin: 0; max-width: 66ch; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+.top { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; padding-block: 14px; font-weight: 700; }
+.top strong { margin-right: auto; }
+.top a { color: var(--ink); }
+
+.hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; padding-block: 24px 40px; }
+.hero > * { min-width: 0; }
+.hero p.lead { font-size: 1.15rem; margin-top: 14px; color: var(--muted); }
+.rotor-box { background: var(--card); border: 2px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 12px; }
+.rotor-box svg { width: 100%; height: auto; display: block; max-width: 300px; margin-inline: auto; }
+.seg { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.seg button { font: inherit; font-weight: 700; background: var(--card); color: var(--ink); border: 2px solid var(--blue); border-radius: 999px; padding: 4px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--blue); color: #fff; }
+.rotor { transform-origin: 0 0; animation: spin 3s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .rotor { animation: none; } }
+.small { font-size: 0.85rem; color: var(--muted); text-align: center; }
+
+section { padding-block: 36px; display: grid; gap: 22px; }
+.box { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 18px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; }
+.two > * { min-width: 0; }
+.two.top-align { align-items: start; }
+@media (max-width: 720px) { .hero, .two { grid-template-columns: 1fr; } }
+figure { margin: 0; display: grid; gap: 6px; }
+figure img { width: 100%; height: auto; display: block; border-radius: 10px; border: 2px solid var(--line); background: #fff; }
+figcaption { font-size: 0.85rem; color: var(--muted); }
+
+.tag { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 1px 10px; border-radius: 999px; white-space: nowrap; }
+.tag.no { background: var(--no-soft); color: var(--no); }
+.tag.yes { background: var(--good-soft); color: var(--good); }
+.tag.info { background: var(--blue-soft); color: var(--blue); }
+.tag.maybe { background: var(--maybe-soft); color: var(--maybe); }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.steps li { display: grid; grid-template-columns: 38px 1fr; gap: 12px; }
+.n { width: 38px; height: 38px; border-radius: 50%; background: var(--blue); color: #fff; font-family: var(--font-head); display: grid; place-items: center; }
+.steps li.final .n { background: var(--orange); }
+.steps .body { display: grid; gap: 4px; min-width: 0; }
+.head { display: flex; gap: 8px 12px; flex-wrap: wrap; align-items: center; }
+.keep { color: var(--muted); font-size: 0.95rem; }
+
+/* chart */
+.bars { display: grid; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 56px; gap: 10px; align-items: center; font-size: 0.92rem; }
+.bar-row > * { min-width: 0; }
+.track { position: relative; height: 16px; background: var(--bg); border-radius: 8px; }
+.track::after { content: ""; position: absolute; left: 83.33%; top: -3px; bottom: -3px; border-left: 2px dashed var(--ink); }
+.fill { position: absolute; inset: 0 auto 0 0; background: var(--blue); border-radius: 8px; }
+.fill.q { background: repeating-linear-gradient(135deg, var(--orange) 0 5px, transparent 5px 9px); border: 2px solid var(--orange); }
+.axis { display: grid; grid-template-columns: 150px 1fr 56px; gap: 10px; font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+.axis div:nth-child(2) { display: flex; justify-content: space-between; }
+@media (max-width: 560px) { .bar-row, .axis { grid-template-columns: 96px 1fr 44px; gap: 6px; } }
+
+ul.list { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.verdict { border-left: 6px solid var(--good); background: var(--good-soft); padding: 12px 16px; border-radius: 0 10px 10px 0; max-width: 80ch; }
+.eq { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.88rem; background: var(--card); border: 2px solid var(--line); border-radius: 10px; padding: 10px 14px; overflow-x: auto; max-width: 100%; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.card { border: 2px dashed var(--line); border-radius: 14px; padding: 14px; background: var(--card); display: grid; gap: 8px; align-content: start; }
+.card dl { margin: 0; display: grid; gap: 4px; font-size: 0.92rem; }
+.card dl div { display: grid; grid-template-columns: 82px 1fr; gap: 8px; }
+.card dt { font-weight: 700; }
+.card dd { margin: 0; color: var(--muted); font-style: italic; }
+.vid { aspect-ratio: 16 / 9; max-width: 100%; border: 2px dashed var(--line); border-radius: 12px; display: grid; place-items: center; background: var(--bg); }
+.vid-in { display: grid; gap: 6px; text-align: center; padding: 16px; justify-items: center; }
+.vid-in span { color: var(--muted); font-size: 0.95rem; }
+.vid-in a { color: var(--blue); font-weight: 700; }
+footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
+</style>
+<style>body{margin:0 auto}</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="top" aria-label="Sections">
+  <strong>Blade Count Project</strong>
+  <a href="#parts">1 Parts</a>
+  <a href="#hub">2 Hub</a>
+  <a href="#experiment">3 Experiment</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <h1>How Many Blades Does a Small Wind Turbine Need?</h1>
+    <p class="lead">For our research project we test a turbine with 2, 3, 4 and 5 blades to find out which one makes the most power. This page shows how we picked our parts.</p>
+  </div>
+  <div class="rotor-box">
+    <svg viewBox="-110 -110 220 220" role="img" aria-label="Rotor with selectable blade count">
+      <circle r="100" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="5 5"/>
+      <g class="rotor" id="rotor"></g>
+      <circle r="9" fill="var(--ink)"/>
+      <circle r="3" fill="var(--card)"/>
+    </svg>
+    <div class="seg" role="group" aria-label="Blade count">
+      <button type="button" data-n="2" aria-pressed="false">2 blades</button>
+      <button type="button" data-n="3" aria-pressed="true">3 blades</button>
+      <button type="button" data-n="4" aria-pressed="false">4 blades</button>
+      <button type="button" data-n="5" aria-pressed="false">5 blades</button>
+    </div>
+    <div class="small">Pick a blade count to see it spin.</div>
+  </div>
+</header>
+
+<!-- SECTION 1 -->
+<section id="parts">
+  <h2>1. Choosing the right parts</h2>
+  <p>We picked the propeller first, then looked for a motor that matches it. The motor has to be strong enough to hold the propeller, but not so hard to turn that the wind can't spin it. Torque (the twisting force) is a big part of that choice.</p>
+
+  <div class="box two">
+    <div>
+      <h3>The propeller</h3>
+      <p style="margin-top:8px"><b>FMS Propeller, 14 x 8, 4-Blade, 1400mm F4U</b></p>
+      <p style="margin-top:8px" class="keep">It was on the materials list from our professor. We cut it apart and use the blades one at a time.</p>
+    </div>
+    <figure><img src="assets/propeller.jpg" alt="Four FMS propeller blades with yellow tips"><figcaption>The FMS propeller blades.</figcaption></figure>
+  </div>
+
+  <h3>Finding the motor</h3>
+  <p>We tried a lot of motors before we found one that worked. Here is what happened.</p>
+  <ol class="steps">
+    <li><div class="n">1</div><div class="body">
+      <div class="head"><h3>A basic motor with an RC gearbox</h3><span class="tag no">Not used</span></div>
+      <p>A gearbox makes a motor spin slower but stronger. We need the opposite, because the wind is what turns our motor. Gears also rub together and waste energy.</p>
+      <p class="keep">We kept one idea: a nut on a threaded shaft to hold the propeller on.</p>
+    </div></li>
+    <li><div class="n">2</div><div class="body">
+      <div class="head"><h3>The 775 motor</h3><span class="tag no">Not used</span></div>
+      <p>It has a flat spot on its shaft, which stops the hub from slipping. But it needs about 300 spins per minute just to make 1 volt, and our turbine will probably spin slower than 500. It was also stiff to turn.</p>
+    </div></li>
+    <li><div class="n">3</div><div class="body">
+      <div class="head"><h3>The KidWind generator</h3><span class="tag no">Not used</span></div>
+      <p>It is made for classroom turbines and spins easily. But its shaft is only 2 mm thin, and our propeller is big and heavy. The shaft would bend.</p>
+    </div></li>
+    <li><div class="n">4</div><div class="body">
+      <div class="head"><h3>A stronger fan</h3><span class="tag info">Upgrade</span></div>
+      <p>We switched to a Vornado Model 80. It blows up to about 8.6 m/s (19 mph), roughly 50% stronger than a normal box fan. That helps, but it did not fix everything.</p>
+    </div></li>
+    <li><div class="n">5</div><div class="body">
+      <div class="head"><h3>A treadmill motor</h3><span class="tag no">Not used</span></div>
+      <p>It has a thick 17 mm shaft and makes lots of voltage. But it costs $313.95 and weighs about 20 pounds. That is way too big for a tabletop project.</p>
+    </div></li>
+    <li class="final"><div class="n">6</div><div class="body">
+      <div class="head"><h3>The XD-3420</h3><span class="tag yes">Our motor</span></div>
+      <p>It costs $22.99, it is small, and its shaft is 8 mm thick, almost twice as thick as the 775's. The trade-off is that it needs more spins per minute to make voltage. We picked it because a strong shaft matters most for our heavy propeller.</p>
+      <p class="keep">We still need to measure exactly how much voltage it makes. Our notes say 508 spins per volt, but the seller's listing points to about 292.</p>
+    </div></li>
+  </ol>
+
+  <div class="box two top-align">
+    <figure><img src="assets/motor.jpg" alt="XD-3420 motor with its mounting bracket"><figcaption>Our motor, the XD-3420, with its mounting bracket.</figcaption></figure>
+    <figure><img src="assets/motor-size-drawing.jpg" alt="XD-3420 motor size drawing in millimeters"><figcaption>Size drawing of the motor (millimeters).</figcaption></figure>
+  </div>
+
+  <div class="box">
+    <h3>How many spins does it take to make 1 volt?</h3>
+    <p class="keep" style="margin-block:6px 12px">A shorter bar is better for a slow turbine. The dashed line is 500 spins per minute, about as fast as we expect ours to go.</p>
+    <div class="bars">
+      <div class="bar-row"><div>Treadmill motor</div><div class="track"><div class="fill" style="width:7.8%"></div></div><div>47</div></div>
+      <div class="bar-row"><div>BUBUQD motor</div><div class="track"><div class="fill" style="width:20.8%"></div></div><div>≈ 125</div></div>
+      <div class="bar-row"><div>XD-3420 (listing)</div><div class="track"><div class="fill q" style="width:48.7%"></div></div><div>≈ 292</div></div>
+      <div class="bar-row"><div>775 motor</div><div class="track"><div class="fill" style="width:53.8%"></div></div><div>≈ 323</div></div>
+      <div class="bar-row"><div>KidWind</div><div class="track"><div class="fill" style="width:56.5%"></div></div><div>≈ 339</div></div>
+      <div class="bar-row"><div>XD-3420 (notes)</div><div class="track"><div class="fill q" style="width:84.7%"></div></div><div>≈ 508</div></div>
+    </div>
+    <div class="axis" aria-hidden="true"><div></div><div><span>0</span><span>200</span><span>400</span><span>600</span></div><div></div></div>
+    <p class="small" style="text-align:left; margin-top:8px">Striped bars are the two numbers we have not sorted out yet.</p>
+  </div>
+
+  <h3>What the motor and propeller need to agree on</h3>
+  <ul class="list">
+    <li>The wind has to be able to get the propeller spinning without fighting a stiff motor.</li>
+    <li>The motor can't push back so hard that it stops the propeller. That push-back is called load torque.</li>
+    <li>The motor has to make enough voltage for our voltmeter to read.</li>
+    <li>The shaft has to hold the propeller's weight without bending.</li>
+  </ul>
+  <div class="verdict"><b>Physically possible.</b> Real rotors capture only a fraction of the Betz limit, and friction is not included, so use the experiment to find the true margin.</div>
+  <div class="eq">P_wind = ½ρAV³ &nbsp;·&nbsp; P_max = 0.593 · P_wind &nbsp;·&nbsp; T_ceiling = P_max / ω &nbsp;·&nbsp; V_oc = RPM / KV &nbsp;·&nbsp; I = V_oc / (R_load + R_winding) &nbsp;·&nbsp; T_load = I · 60 / (2π · KV)</div>
+</section>
+
+<!-- SECTION 2 -->
+<section id="hub">
+  <h2>2. The hub</h2>
+  <p>The hub connects the blades to the motor. We designed it in CAD and went through several versions, talking about the good and bad of each one: shape, size, material, how it attaches to the motor shaft, and how stable it is. We measured every part of our materials so the hub would fit the motor shaft and the blades just right.</p>
+
+  <div class="box">
+    <h3>What the hub has to do</h3>
+    <ul class="list" style="margin-top:10px">
+      <li>Fit the motor shaft and the blades exactly.</li>
+      <li>Stay put on the shaft. It can't shift or slip while spinning, and it can't slide off.</li>
+      <li>Stay balanced and steady, even with only 2, 3 or 4 blades on it.</li>
+      <li>Weigh as little as possible so the propeller spins up more easily.</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h3>Choices we have made so far</h3>
+    <ul class="list" style="margin-top:10px">
+      <li><b>Stopping slipping:</b> file a flat spot onto the motor shaft, make the hub's hole match it, and lock it with a set screw.</li>
+      <li><b>Stopping sliding off:</b> a threaded shaft with a nut.</li>
+      <li><b>How we made it:</b> designed in CAD, then 3D printed, because no store-bought part connects these blades to this motor.</li>
+      <li><b>Layout:</b> five spots around the hub, 72° apart, so one hub works for 2, 3, 4 and 5 blades.</li>
+    </ul>
+  </div>
+
+  <div class="box two">
+    <figure><img src="assets/screws-and-file.jpg" alt="Screws, nuts and a metal file on a table"><figcaption>Screws, nuts and a file we use to build and fit the hub.</figcaption></figure>
+    <p>Pictures of our CAD designs and details for each version will be added below as we write them up.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card"><div class="head"><h3>Hub design 1</h3><span class="tag info">CAD pictures coming</span></div>
+      <dl><div><dt>Shape</dt><dd>to add</dd></div><div><dt>Size</dt><dd>to add</dd></div><div><dt>Material</dt><dd>to add</dd></div><div><dt>Motor link</dt><dd>to add</dd></div><div><dt>Stability</dt><dd>to add</dd></div><div><dt>Weight</dt><dd>to add</dd></div><div><dt>Result</dt><dd>to add</dd></div></dl></article>
+    <article class="card"><div class="head"><h3>Hub design 2</h3><span class="tag info">CAD pictures coming</span></div>
+      <dl><div><dt>Shape</dt><dd>to add</dd></div><div><dt>Size</dt><dd>to add</dd></div><div><dt>Material</dt><dd>to add</dd></div><div><dt>Motor link</dt><dd>to add</dd></div><div><dt>Stability</dt><dd>to add</dd></div><div><dt>Weight</dt><dd>to add</dd></div><div><dt>Result</dt><dd>to add</dd></div></dl></article>
+    <article class="card"><div class="head"><h3>Final hub</h3><span class="tag info">CAD pictures coming</span></div>
+      <dl><div><dt>Shape</dt><dd>to add</dd></div><div><dt>Size</dt><dd>to add</dd></div><div><dt>Material</dt><dd>to add</dd></div><div><dt>Motor link</dt><dd>to add</dd></div><div><dt>Stability</dt><dd>to add</dd></div><div><dt>Weight</dt><dd>to add</dd></div><div><dt>Result</dt><dd>to add</dd></div></dl></article>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section id="experiment">
+  <h2>3. The experiment</h2>
+  <p>Testing meant trying, failing and fixing. Here are some of our 3D-printed hubs that did not work.</p>
+  <div class="box two">
+    <figure><img src="assets/failed-hubs.jpg" alt="Four failed 3D-printed hub discs, two gray and two black, with broken pieces"><figcaption>Failed 3D-printed hubs.</figcaption></figure>
+    <p>Each failed print taught us something that went into the next hub design.</p>
+  </div>
+
+  <div class="box">
+    <h3>First successful run</h3>
+    <p class="keep" style="margin-top:6px">This is the first 15 seconds of our first successful run.</p>
+    <video controls playsinline preload="metadata" style="width:100%;max-width:100%;border-radius:12px;border:2px solid var(--line);background:#000" aria-label="First successful run, first 15 seconds"><source src="assets/first-successful-run-15s.mp4" type="video/mp4"></video>
+    <p class="small" style="text-align:left;margin-top:8px"><a href="https://drive.google.com/file/d/1Pyl1AFY__7gByiqnMc-ryQJuiA7-wFNg/view" target="_blank" rel="noopener" style="color:var(--blue);font-weight:700">Watch the full video on Google Drive</a></p>
+  </div>
+
+  <div class="box two">
+    <p>Next, for each blade count we will record voltage, current and wind speed, then figure out how much power each one makes.</p>
+    <figure><img src="assets/anemometer.jpg" alt="Handheld anemometer with tripod"><figcaption>We measure wind speed with this handheld anemometer.</figcaption></figure>
+  </div>
+</section>
+
+<footer>Still to do: measure the motor's voltage per spin, measure the propeller's center hole and blade screw holes, and write up each hub design.</footer>
+</div>
+
+<script>
+(function () {
+  var rotor = document.getElementById('rotor');
+  var buttons = document.querySelectorAll('.seg button');
+  var bladePath = 'M 0 -10 C 9 -30, 12 -62, 6 -94 C 2 -97, -5 -97, -7 -92 C -10 -62, -7 -30, 0 -10 Z';
+  function draw(n) {
+    var html = '';
+    for (var i = 0; i < n; i++) {
+      html += '<path d="' + bladePath + '" fill="var(--blue)" fill-opacity="0.85" stroke="var(--ink)" stroke-width="1.5" transform="rotate(' + (i * 360 / n) + ')"/>';
+    }
+    rotor.innerHTML = html;
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.n === String(n))); });
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { draw(Number(b.dataset.n)); }); });
+  draw(3);
+})();
+</script>
+
+</body>
+</html>
