@@ -44,10 +44,12 @@
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; padding-inline: 16px; }
 .wrap { max-width: 920px; margin-inline: auto; }
-h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; margin: 0; text-wrap: balance; }
+h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.2; margin: 0; text-wrap: balance; }
 h1 { font-size: clamp(2rem, 6vw, 3.2rem); color: var(--blue); }
 h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); color: var(--blue); }
 h3 { font-size: 1.15rem; }
+h4 { font-size: 1.1rem; }
+h3.sub { font-size: clamp(1.3rem, 3.2vw, 1.6rem); color: var(--blue); padding-bottom: 6px; border-bottom: 3px solid var(--orange); margin-top: 18px; }
 p { margin: 0; max-width: 66ch; }
 :focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 
@@ -77,6 +79,8 @@ section { padding-block: 36px; display: grid; gap: 22px; }
 figure { margin: 0; display: grid; gap: 6px; }
 figure img { width: 100%; height: auto; display: block; border-radius: 10px; border: 2px solid var(--line); background: #fff; }
 figcaption { font-size: 0.85rem; color: var(--muted); }
+.credit { display: block; margin-top: 4px; font-size: 0.78rem; font-style: italic; }
+.credit a { color: var(--blue); font-weight: 700; }
 
 .tag { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 1px 10px; border-radius: 999px; white-space: nowrap; }
 .tag.no { background: var(--no-soft); color: var(--no); }
@@ -118,6 +122,25 @@ ul.list { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
 .vid-in { display: grid; gap: 6px; text-align: center; padding: 16px; justify-items: center; }
 .vid-in span { color: var(--muted); font-size: 0.95rem; }
 .vid-in a { color: var(--blue); font-weight: 700; }
+section { grid-template-columns: minmax(0, 1fr); }
+section > * { min-width: 0; }
+.tbl { overflow-x: auto; }
+.tbl table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.95rem; }
+.tbl th, .tbl td { border: 1px solid var(--line); padding: 8px 10px; text-align: center; }
+.tbl thead th { background: var(--blue-soft); color: var(--ink); font-family: var(--font-head); font-size: 0.85rem; }
+.tbl tbody th { text-align: left; background: var(--bg); white-space: nowrap; }
+.tbl td { font-weight: 700; font-variant-numeric: tabular-nums; }
+.tbl td small { display: block; font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+.steps { gap: 10px; }
+.steps li { grid-template-columns: 30px 1fr; gap: 10px; font-size: 0.88rem; line-height: 1.5; }
+.steps .n { width: 30px; height: 30px; font-size: 0.8rem; }
+.steps h3, .steps h4 { font-size: 0.98rem; }
+.steps .keep { font-size: 0.82rem; }
+.steps .tag { font-size: 0.7rem; padding: 0 8px; }
+.runs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.runs > * { min-width: 0; }
+.runs video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; border: 2px solid var(--line); background: #000; display: block; }
+.learned-box { border-left: 6px solid var(--orange); }
 footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
 </style>
 <style>body{margin:0 auto}</style>
@@ -128,14 +151,16 @@ footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
 <nav class="top" aria-label="Sections">
   <strong>Blade Count Project</strong>
   <a href="#parts">1 Parts</a>
-  <a href="#hub">2 Hub</a>
+  <a href="#hub">2 Hub &amp; stand</a>
   <a href="#experiment">3 Experiment</a>
+  <a href="#trials">4 Trial runs</a>
+  <a href="#results">5 Results</a>
 </nav>
 
 <header class="hero">
   <div>
     <h1>How Many Blades Does a Small Wind Turbine Need?</h1>
-    <p class="lead">For our research project we test a turbine with 2, 3, 4 and 5 blades to find out which one makes the most power. This page shows how we picked our parts.</p>
+    <p class="lead">For my research project I test a turbine with 2, 3, 4 and 5 blades to find out which one makes the most power.</p>
   </div>
   <div class="rotor-box">
     <svg viewBox="-110 -110 220 220" role="img" aria-label="Rotor with selectable blade count">
@@ -157,56 +182,52 @@ footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
 <!-- SECTION 1 -->
 <section id="parts">
   <h2>1. Choosing the right parts</h2>
-  <p>We picked the propeller first, then looked for a motor that matches it. The motor has to be strong enough to hold the propeller, but not so hard to turn that the wind can't spin it. Torque (the twisting force) is a big part of that choice.</p>
+  <p>I picked the propeller first, then looked for a motor that matches it. The motor has to be strong enough to hold the propeller, but not so hard to turn that the wind can't spin it. Torque (the twisting force) is a big part of that choice.</p>
 
   <div class="box two">
     <div>
       <h3>The propeller</h3>
       <p style="margin-top:8px"><b>FMS Propeller, 14 x 8, 4-Blade, 1400mm F4U</b></p>
-      <p style="margin-top:8px" class="keep">It was on the materials list from our professor. We cut it apart and use the blades one at a time.</p>
+      <p style="margin-top:8px" class="keep">It was on the materials list from my professor. I cut it apart and use the blades one at a time.</p>
     </div>
-    <figure><img src="assets/propeller.jpg" alt="Four FMS propeller blades with yellow tips"><figcaption>The FMS propeller blades.</figcaption></figure>
+    <figure><img src="assets/propeller.jpg" alt="Four FMS propeller blades with yellow tips"><figcaption>The FMS propeller blades.<span class="credit">Image credit: <a href="https://www.towerhobbies.com/product/fms-propeller-14-x-8-4-blade-1400mm-f4u/FMMPROP004.html" target="_blank" rel="noopener">Tower Hobbies</a></span></figcaption></figure>
   </div>
 
   <h3>Finding the motor</h3>
-  <p>We tried a lot of motors before we found one that worked. Here is what happened.</p>
+  <p>I tried a lot of motors before I found one that worked. Here is what happened.</p>
   <ol class="steps">
     <li><div class="n">1</div><div class="body">
       <div class="head"><h3>A basic motor with an RC gearbox</h3><span class="tag no">Not used</span></div>
-      <p>A gearbox makes a motor spin slower but stronger. We need the opposite, because the wind is what turns our motor. Gears also rub together and waste energy.</p>
-      <p class="keep">We kept one idea: a nut on a threaded shaft to hold the propeller on.</p>
+      <p>A gearbox makes a motor spin slower but stronger. I need the opposite, because the wind is what turns my motor. Gears also rub together and waste energy.</p>
+      <p class="keep">I kept one idea: a nut on a threaded shaft to hold the propeller on.</p>
     </div></li>
     <li><div class="n">2</div><div class="body">
       <div class="head"><h3>The 775 motor</h3><span class="tag no">Not used</span></div>
-      <p>It has a flat spot on its shaft, which stops the hub from slipping. But it needs about 300 spins per minute just to make 1 volt, and our turbine will probably spin slower than 500. It was also stiff to turn.</p>
+      <p>It has a flat spot on its shaft, which stops the hub from slipping. But it needs about 300 spins per minute just to make 1 volt, and my turbine will probably spin slower than 500. It was also stiff to turn.</p>
     </div></li>
     <li><div class="n">3</div><div class="body">
       <div class="head"><h3>The KidWind generator</h3><span class="tag no">Not used</span></div>
-      <p>It is made for classroom turbines and spins easily. But its shaft is only 2 mm thin, and our propeller is big and heavy. The shaft would bend.</p>
+      <p>It is made for classroom turbines and spins easily. But its shaft is only 2 mm thin, and my propeller is big and heavy. The shaft would bend.</p>
     </div></li>
     <li><div class="n">4</div><div class="body">
-      <div class="head"><h3>A stronger fan</h3><span class="tag info">Upgrade</span></div>
-      <p>We switched to a Vornado Model 80. It blows up to about 8.6 m/s (19 mph), roughly 50% stronger than a normal box fan. That helps, but it did not fix everything.</p>
-    </div></li>
-    <li><div class="n">5</div><div class="body">
       <div class="head"><h3>A treadmill motor</h3><span class="tag no">Not used</span></div>
       <p>It has a thick 17 mm shaft and makes lots of voltage. But it costs $313.95 and weighs about 20 pounds. That is way too big for a tabletop project.</p>
     </div></li>
-    <li class="final"><div class="n">6</div><div class="body">
-      <div class="head"><h3>The XD-3420</h3><span class="tag yes">Our motor</span></div>
-      <p>It costs $22.99, it is small, and its shaft is 8 mm thick, almost twice as thick as the 775's. The trade-off is that it needs more spins per minute to make voltage. We picked it because a strong shaft matters most for our heavy propeller.</p>
-      <p class="keep">We still need to measure exactly how much voltage it makes. Our notes say 508 spins per volt, but the seller's listing points to about 292.</p>
+    <li class="final"><div class="n">5</div><div class="body">
+      <div class="head"><h3>The XD-3420</h3><span class="tag yes">My motor</span></div>
+      <p>It costs $22.99, it is small, and its shaft is 8 mm thick, almost twice as thick as the 775's. The trade-off is that it needs more spins per minute to make voltage. I picked it because a strong shaft matters most for my heavy propeller.</p>
+      <p class="keep">I still need to measure exactly how much voltage it makes. My notes say 508 spins per volt, but the seller's listing points to about 292.</p>
     </div></li>
   </ol>
 
   <div class="box two top-align">
-    <figure><img src="assets/motor.jpg" alt="XD-3420 motor with its mounting bracket"><figcaption>Our motor, the XD-3420, with its mounting bracket.</figcaption></figure>
-    <figure><img src="assets/motor-size-drawing.jpg" alt="XD-3420 motor size drawing in millimeters"><figcaption>Size drawing of the motor (millimeters).</figcaption></figure>
+    <figure><img src="assets/motor.jpg" alt="XD-3420 motor with its mounting bracket"><figcaption>My motor, the XD-3420, with its mounting bracket.<span class="credit">Image credit: <a href="https://www.amazon.com/dp/B0B221MQLC?ref=ppx_yo2ov_dt_b_fed_asin_title&amp;th=1" target="_blank" rel="noopener">Amazon product listing</a></span></figcaption></figure>
+    <figure><img src="assets/motor-size-drawing.jpg" alt="XD-3420 motor size drawing in millimeters"><figcaption>Size drawing of the motor (millimeters).<span class="credit">Image credit: <a href="https://www.amazon.com/dp/B0B221MQLC?ref=ppx_yo2ov_dt_b_fed_asin_title&amp;th=1" target="_blank" rel="noopener">Amazon product listing</a></span></figcaption></figure>
   </div>
 
   <div class="box">
     <h3>How many spins does it take to make 1 volt?</h3>
-    <p class="keep" style="margin-block:6px 12px">A shorter bar is better for a slow turbine. The dashed line is 500 spins per minute, about as fast as we expect ours to go.</p>
+    <p class="keep" style="margin-block:6px 12px">A shorter bar is better for a slow turbine. The dashed line is 500 spins per minute, about as fast as I expect mine to go.</p>
     <div class="bars">
       <div class="bar-row"><div>Treadmill motor</div><div class="track"><div class="fill" style="width:7.8%"></div></div><div>47</div></div>
       <div class="bar-row"><div>BUBUQD motor</div><div class="track"><div class="fill" style="width:20.8%"></div></div><div>≈ 125</div></div>
@@ -216,14 +237,14 @@ footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
       <div class="bar-row"><div>XD-3420 (notes)</div><div class="track"><div class="fill q" style="width:84.7%"></div></div><div>≈ 508</div></div>
     </div>
     <div class="axis" aria-hidden="true"><div></div><div><span>0</span><span>200</span><span>400</span><span>600</span></div><div></div></div>
-    <p class="small" style="text-align:left; margin-top:8px">Striped bars are the two numbers we have not sorted out yet.</p>
+    <p class="small" style="text-align:left; margin-top:8px">Striped bars are the two numbers I have not sorted out yet.</p>
   </div>
 
   <h3>What the motor and propeller need to agree on</h3>
   <ul class="list">
     <li>The wind has to be able to get the propeller spinning without fighting a stiff motor.</li>
     <li>The motor can't push back so hard that it stops the propeller. That push-back is called load torque.</li>
-    <li>The motor has to make enough voltage for our voltmeter to read.</li>
+    <li>The motor has to make enough voltage for my voltmeter to read.</li>
     <li>The shaft has to hold the propeller's weight without bending.</li>
   </ul>
   <div class="verdict"><b>Physically possible.</b> Real rotors capture only a fraction of the Betz limit, and friction is not included, so use the experiment to find the true margin.</div>
@@ -232,11 +253,14 @@ footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
 
 <!-- SECTION 2 -->
 <section id="hub">
-  <h2>2. The hub</h2>
-  <p>The hub connects the blades to the motor. We designed it in CAD and went through several versions, talking about the good and bad of each one: shape, size, material, how it attaches to the motor shaft, and how stable it is. We measured every part of our materials so the hub would fit the motor shaft and the blades just right.</p>
+  <h2>2. The hub and the stand</h2>
+  <p>Two things hold my turbine together. The hub connects the blades to the motor, and the stand holds the motor steady outdoors while the blades spin.</p>
+
+  <h3 class="sub" id="hub-design">2a. The hub</h3>
+  <p>The hub connects the blades to the motor. I designed it in CAD and went through several versions, talking about the good and bad of each one: shape, size, material, how it attaches to the motor shaft, and how stable it is. I measured every part of my materials so the hub would fit the motor shaft and the blades just right.</p>
 
   <div class="box">
-    <h3>What the hub has to do</h3>
+    <h4>What the hub has to do</h4>
     <ul class="list" style="margin-top:10px">
       <li>Fit the motor shaft and the blades exactly.</li>
       <li>Stay put on the shaft. It can't shift or slip while spinning, and it can't slide off.</li>
@@ -246,53 +270,162 @@ footer { padding-block: 28px 44px; color: var(--muted); font-size: 0.9rem; }
   </div>
 
   <div class="box">
-    <h3>Choices we have made so far</h3>
+    <h4>Choices I have made so far</h4>
     <ul class="list" style="margin-top:10px">
       <li><b>Stopping slipping:</b> file a flat spot onto the motor shaft, make the hub's hole match it, and lock it with a set screw.</li>
       <li><b>Stopping sliding off:</b> a threaded shaft with a nut.</li>
-      <li><b>How we made it:</b> designed in CAD, then 3D printed, because no store-bought part connects these blades to this motor.</li>
-      <li><b>Layout:</b> five spots around the hub, 72° apart, so one hub works for 2, 3, 4 and 5 blades.</li>
+      <li><b>How I made it:</b> designed in CAD, then 3D printed, because no store-bought part connects these blades to this motor.</li>
+      <li><b>Layout:</b> I made 4 different hubs, one for each blade count (2, 3, 4 and 5). The blade slots are spaced evenly around each hub, 180°, 120°, 90° and 72° apart.</li>
     </ul>
   </div>
 
-  <div class="box two">
-    <figure><img src="assets/screws-and-file.jpg" alt="Screws, nuts and a metal file on a table"><figcaption>Screws, nuts and a file we use to build and fit the hub.</figcaption></figure>
-    <p>Pictures of our CAD designs and details for each version will be added below as we write them up.</p>
+  <div class="box">
+    <h4>Designing the hub in CAD</h4>
+    <p class="keep" style="margin-block:6px 0">I drew every hub in Autodesk Fusion (CAD) before printing it. Each one has a slot for every blade and a hole in the middle for the motor shaft. Here is the hub for each blade count, seen from the blade side and from the back.</p>
   </div>
 
-  <div class="cards">
-    <article class="card"><div class="head"><h3>Hub design 1</h3><span class="tag info">CAD pictures coming</span></div>
-      <dl><div><dt>Shape</dt><dd>to add</dd></div><div><dt>Size</dt><dd>to add</dd></div><div><dt>Material</dt><dd>to add</dd></div><div><dt>Motor link</dt><dd>to add</dd></div><div><dt>Stability</dt><dd>to add</dd></div><div><dt>Weight</dt><dd>to add</dd></div><div><dt>Result</dt><dd>to add</dd></div></dl></article>
-    <article class="card"><div class="head"><h3>Hub design 2</h3><span class="tag info">CAD pictures coming</span></div>
-      <dl><div><dt>Shape</dt><dd>to add</dd></div><div><dt>Size</dt><dd>to add</dd></div><div><dt>Material</dt><dd>to add</dd></div><div><dt>Motor link</dt><dd>to add</dd></div><div><dt>Stability</dt><dd>to add</dd></div><div><dt>Weight</dt><dd>to add</dd></div><div><dt>Result</dt><dd>to add</dd></div></dl></article>
-    <article class="card"><div class="head"><h3>Final hub</h3><span class="tag info">CAD pictures coming</span></div>
-      <dl><div><dt>Shape</dt><dd>to add</dd></div><div><dt>Size</dt><dd>to add</dd></div><div><dt>Material</dt><dd>to add</dd></div><div><dt>Motor link</dt><dd>to add</dd></div><div><dt>Stability</dt><dd>to add</dd></div><div><dt>Weight</dt><dd>to add</dd></div><div><dt>Result</dt><dd>to add</dd></div></dl></article>
+  <div class="box">
+    <h4>2-blade hub <span class="tag info">two slots, 180° apart</span></h4>
+    <div class="two top-align" style="margin-top:12px">
+      <figure><img src="assets/cad-2-blade-front.jpg" alt="Two views of the 2-blade hub in Fusion CAD, blade side" loading="lazy"><figcaption>2-blade hub, blade side.</figcaption></figure>
+      <figure><img src="assets/cad-2-blade-back.jpg" alt="Two views of the 2-blade hub in Fusion CAD, back side with the shaft collar" loading="lazy"><figcaption>2-blade hub, back side.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="box">
+    <h4>3-blade hub <span class="tag info">three slots, 120° apart</span></h4>
+    <div class="two top-align" style="margin-top:12px">
+      <figure><img src="assets/cad-3-blade-front.jpg" alt="Two views of the 3-blade hub in Fusion CAD, blade side" loading="lazy"><figcaption>3-blade hub, blade side.</figcaption></figure>
+      <figure><img src="assets/cad-3-blade-back.jpg" alt="Two views of the 3-blade hub in Fusion CAD, back side with the shaft collar" loading="lazy"><figcaption>3-blade hub, back side.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="box">
+    <h4>4-blade hub <span class="tag info">four slots, 90° apart</span></h4>
+    <div class="two top-align" style="margin-top:12px">
+      <figure><img src="assets/cad-4-blade-front.jpg" alt="Two views of the 4-blade hub in Fusion CAD, blade side" loading="lazy"><figcaption>4-blade hub, blade side.</figcaption></figure>
+      <figure><img src="assets/cad-4-blade-back.jpg" alt="Two views of the 4-blade hub in Fusion CAD, back side with the shaft collar" loading="lazy"><figcaption>4-blade hub, back side.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="box">
+    <h4>5-blade hub <span class="tag info">five slots, 72° apart</span></h4>
+    <div class="two top-align" style="margin-top:12px">
+      <figure><img src="assets/cad-5-blade-front.jpg" alt="Two views of the 5-blade hub in Fusion CAD, blade side" loading="lazy"><figcaption>5-blade hub, blade side.</figcaption></figure>
+      <figure><img src="assets/cad-5-blade-back.jpg" alt="Two views of the 5-blade hub in Fusion CAD, back side with the shaft collar" loading="lazy"><figcaption>5-blade hub, back side.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="box">
+    <h4>My CAD notes</h4>
+    <figure style="margin-top:10px"><img src="assets/cad-notes.jpg" alt="Handwritten CAD notes on a whiteboard" style="max-width:520px;margin-inline:auto"><figcaption>Whiteboard notes in between iterations. I was always tweaking and revamping.</figcaption></figure>
+  </div>
+
+  <h3 class="sub" id="stand">2b. The stand</h3>
+  <p>The motor and propeller need something solid to sit on, so they don't shake or tip over while they spin. Here is how I built the stand.</p>
+
+  <div class="box two top-align">
+    <figure><img src="assets/stand-setup.jpg" alt="Long piece of wood on an outdoor glass table with the motor and propeller at one end, an anemometer on a tripod, and a multimeter" loading="lazy"><figcaption>The stand: a long piece of wood on an outdoor table, with the motor and propeller at one end (frame from my first successful run video).</figcaption></figure>
+    <figure><img src="assets/stand-mulch.jpg" alt="Close-up of the motor on its bracket with the propeller, and a bag of mulch resting behind it on the table" loading="lazy"><figcaption>The motor on its bracket, with the bag of mulch behind it (frame from my 3-blade first-run video).</figcaption></figure>
+  </div>
+
+  <ol class="steps">
+    <li><div class="n">1</div><div class="body">
+      <div class="head"><h4>Drill the holes</h4></div>
+      <p>I drilled 4 holes into a long piece of wood, at spots I marked first with a black Sharpie.</p>
+    </div></li>
+    <li><div class="n">2</div><div class="body">
+      <div class="head"><h4>Screw on the bracket</h4></div>
+      <p>The motor came with a bracket. I screwed the bracket into the wood at those holes.</p>
+    </div></li>
+    <li><div class="n">3</div><div class="body">
+      <div class="head"><h4>Mount the motor and propeller</h4></div>
+      <p>The bracket holds the motor, and the motor holds the propeller, as shown in the photos.</p>
+    </div></li>
+    <li class="final"><div class="n">4</div><div class="body">
+      <div class="head"><h4>Hold it down</h4><span class="tag yes">Stable</span></div>
+      <p>I put the wood on a table outside and held it down with a bag of mulch.</p>
+    </div></li>
+  </ol>
+
+  <div class="box learned-box">
+    <h4>Why a bag of mulch?</h4>
+    <p style="margin-top:8px">I was thinking about how to weigh down the wood so the setup would stay in place. I thought of how people use sandbags to hold heavy structures in place, so I used a bag of mulch I had handy to keep the stand stable.</p>
   </div>
 </section>
 
 <!-- SECTION 3 -->
 <section id="experiment">
   <h2>3. The experiment</h2>
-  <p>Testing meant trying, failing and fixing. Here are some of our 3D-printed hubs that did not work.</p>
+  <div class="box">
+    <h3>What I measure with</h3>
+    <div class="two top-align" style="margin-top:10px">
+      <figure><img src="assets/anemometer.jpg" alt="Handheld anemometer with tripod"><figcaption><b>Anemometer:</b> measures wind speed.<span class="credit">Image credit: <a href="https://www.amazon.com/dp/B0DCNPGN5F?ref=ppx_yo2ov_dt_b_fed_asin_title" target="_blank" rel="noopener">Amazon product listing</a></span></figcaption></figure>
+      <figure><img src="assets/multimeter.jpg" alt="Mastech MS8268 digital multimeter with red and black leads"><figcaption><b>Multimeter</b> (Mastech MS8268): measures the voltage my motor makes.</figcaption></figure>
+    </div>
+  </div>
+
+  <p>Testing meant trying, failing and fixing. Here are some of my 3D-printed hubs that did not work.</p>
   <div class="box two">
     <figure><img src="assets/failed-hubs.jpg" alt="Four failed 3D-printed hub discs, two gray and two black, with broken pieces"><figcaption>Failed 3D-printed hubs.</figcaption></figure>
-    <p>Each failed print taught us something that went into the next hub design.</p>
+    <p>Each failed print taught me something that went into the next hub design.</p>
+  </div>
+
+  <div class="box two">
+    <figure><img src="assets/all-blades.jpg" alt="Rotors with 2, 3, 4 and 5 blades laid out on a glass table"><figcaption>All of my blade setups (2, 3, 4 and 5 blades) before the first run.</figcaption></figure>
+    <p>Each rotor uses the same blades and the same style of hub. Only the number of blades changes.</p>
   </div>
 
   <div class="box">
     <h3>First successful run</h3>
-    <p class="keep" style="margin-top:6px">This is the first 15 seconds of our first successful run.</p>
+    <p class="keep" style="margin-top:6px">This is the first 15 seconds of my first successful run.</p>
     <video controls playsinline preload="metadata" style="width:100%;max-width:100%;border-radius:12px;border:2px solid var(--line);background:#000" aria-label="First successful run, first 15 seconds"><source src="assets/first-successful-run-15s.mp4" type="video/mp4"></video>
     <p class="small" style="text-align:left;margin-top:8px"><a href="https://drive.google.com/file/d/1Pyl1AFY__7gByiqnMc-ryQJuiA7-wFNg/view" target="_blank" rel="noopener" style="color:var(--blue);font-weight:700">Watch the full video on Google Drive</a></p>
   </div>
+</section>
 
-  <div class="box two">
-    <p>Next, for each blade count we will record voltage, current and wind speed, then figure out how much power each one makes.</p>
-    <figure><img src="assets/anemometer.jpg" alt="Handheld anemometer with tripod"><figcaption>We measure wind speed with this handheld anemometer.</figcaption></figure>
+<section id="trials">
+  <h2>4. Blade Optimization Trial Runs</h2>
+  <p>Here are the first 10 seconds of my first run for each blade count.</p>
+  <div class="runs"><figure><video poster="assets/trial-2-blades-poster.jpg" controls muted playsinline preload="metadata" aria-label="2 blades, first run, first 10 seconds"><source src="assets/trial-2-blades-first-run-10s.mp4" type="video/mp4"></video><figcaption><b>2 blades</b><br>First run, first 10 seconds</figcaption></figure><figure><video poster="assets/trial-3-blades-poster.jpg" controls muted playsinline preload="metadata" aria-label="3 blades, first run, first 10 seconds"><source src="assets/trial-3-blades-first-run-10s.mp4" type="video/mp4"></video><figcaption><b>3 blades</b><br>First run, first 10 seconds</figcaption></figure><figure><video poster="assets/trial-4-blades-poster.jpg" controls muted playsinline preload="metadata" aria-label="4 blades, first run, first 10 seconds"><source src="assets/trial-4-blades-first-run-10s.mp4" type="video/mp4"></video><figcaption><b>4 blades</b><br>First run, first 10 seconds</figcaption></figure><figure><video poster="assets/trial-5-blades-poster.jpg" controls muted playsinline preload="metadata" aria-label="5 blades, first run, first 10 seconds"><source src="assets/trial-5-blades-first-run-10s.mp4" type="video/mp4"></video><figcaption><b>5 blades</b><br>First run, first 10 seconds</figcaption></figure></div>
+  <div class="box learned-box">
+    <p>I made the first trial, and I learned from it, so I decided to perform a second run.</p>
+    <h3 style="margin-top:14px">What I learned from the first run</h3>
+    <ul class="list" style="margin-top:8px">
+      <li>The wind was not steady, so the voltage lagged behind the wind speed. The slowest-wind numbers (around 5 mph) are too high because the rotor was still coasting.</li>
+      <li>I read the wind speed and the voltage by eye from the videos, about every 2 seconds. A digit can be off by about 0.1 V or 1 mph, and I left out frames where the display was cut off or showed OL.</li>
+      <li>Some spots have only a few readings: 5 blades at 5 mph (2 readings), and 2 and 4 blades at 20 mph (4 readings each).</li>
+      <li>The 4- and 5-blade rotors were already spinning when their videos started, so I could not see the wind speed they start at.</li>
+      <li>I could not read the RPM from the videos, so the RPM in the tables is an estimate.</li>
+    </ul>
   </div>
 </section>
 
-<footer>Still to do: measure the motor's voltage per spin, measure the propeller's center hole and blade screw holes, and write up each hub design.</footer>
+<section id="results">
+  <h2>5. Results so far</h2>
+  <p>For each blade count I read the wind speed and the voltage from my videos, then averaged the voltage near 5 (or 6), 10, 15 and 20 mph.</p>
+  <div class="box">
+      <h3>First run</h3>
+      <p class="keep" style="margin-block:4px 10px">Average voltage, with my estimated RPM underneath.</p>
+      <div class="tbl"><table><thead><tr><th></th><th scope="col">~5 mph wind</th><th scope="col">~10 mph wind</th><th scope="col">~15 mph wind</th><th scope="col">~20 mph wind</th></tr></thead><tbody><tr><th scope="row">2 blades</th><td>0.47 V<small>139 RPM</small></td><td>2.32 V<small>676 RPM</small></td><td>3.39 V<small>989 RPM</small></td><td>4.57 V*<small>1,333 RPM</small></td></tr><tr><th scope="row">3 blades</th><td>1.57 V<small>458 RPM</small></td><td>1.69 V<small>493 RPM</small></td><td>3.41 V<small>993 RPM</small></td><td>4.38 V<small>1,278 RPM</small></td></tr><tr><th scope="row">4 blades</th><td>2.02 V<small>590 RPM</small></td><td>2.53 V<small>736 RPM</small></td><td>5.02 V<small>1,464 RPM</small></td><td>5.15 V*<small>1,502 RPM</small></td></tr><tr><th scope="row">5 blades</th><td>1.69 V*<small>492 RPM</small></td><td>2.70 V<small>789 RPM</small></td><td>3.04 V<small>887 RPM</small></td><td>3.50 V<small>1,020 RPM</small></td></tr></tbody></table></div>
+    </div>
+  <div class="box">
+      <h3>Second run</h3>
+      <p class="keep" style="margin-block:4px 10px">Same idea. The first column is ~6 mph this time because the rotors only started making voltage around 7 to 9 mph. The 2-blade row was read again from the same video as the first run.</p>
+      <div class="tbl"><table><thead><tr><th></th><th scope="col">~6 mph wind</th><th scope="col">~10 mph wind</th><th scope="col">~15 mph wind</th><th scope="col">~20 mph wind</th></tr></thead><tbody><tr><th scope="row">2 blades</th><td>0.50 V<small>146 RPM</small></td><td>2.32 V<small>676 RPM</small></td><td>3.18 V<small>926 RPM</small></td><td>4.45 V*<small>1,299 RPM</small></td></tr><tr><th scope="row">3 blades</th><td>0.49 V*<small>144 RPM</small></td><td>0.88 V<small>256 RPM</small></td><td>2.70 V*<small>788 RPM</small></td><td>3.03 V<small>885 RPM</small></td></tr><tr><th scope="row">4 blades</th><td>0.96 V<small>281 RPM</small></td><td>1.98 V<small>576 RPM</small></td><td>3.86 V*<small>1,126 RPM</small></td><td>5.23 V<small>1,525 RPM</small></td></tr><tr><th scope="row">5 blades</th><td>0.78 V<small>228 RPM</small></td><td>1.72 V<small>502 RPM</small></td><td>4.11 V*<small>1,200 RPM</small></td><td>4.30 V<small>1,255 RPM</small></td></tr></tbody></table></div>
+    </div>
+  <p class="keep">* only a few readings in that spot.</p>
+  <div class="box">
+    <h3>How I estimated the RPM</h3>
+    <p style="margin-top:8px">I did not count the spins. I worked them out from the voltage. A motor used as a generator makes more voltage the faster it spins, so:</p>
+    <p class="eq" style="margin-block:10px">RPM = voltage × 292</p>
+    <p><b>Why 292?</b> It is how many RPM my XD-3420 motor needs to make 1 volt. I got it from the seller's listing, which says the motor spins at 3,500 RPM on 12 V and 7,000 RPM on 24 V. That is 3,500 ÷ 12 = 292 and 7,000 ÷ 24 = 292. For example, 2 volts × 292 = 584 RPM.</p>
+    <p class="keep" style="margin-top:10px">This is only an estimate, maybe off by 15 to 20%. My design notes give a different number, about 508 RPM per volt, and I still need to measure the real one. If 508 is right, every RPM in the tables would be about 1.7 times higher. The wind was not steady and I only ran each blade count once, so this is a first look and not a fair blade-count comparison yet.</p>
+  </div>
+
+</section>
+
+<footer>Still to do: measure the motor's voltage per spin, count the rotor's real RPM, hold the wind steady and repeat each blade count, and write up each hub design.<br><br><strong style="font-size:1.6rem; line-height:1.3; display:block; color:var(--ink,inherit)">My research paper is on the way!</strong></footer>
 </div>
 
 <script>
